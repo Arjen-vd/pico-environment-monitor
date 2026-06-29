@@ -14,6 +14,7 @@ public class ReadingService {
     }
 
     public void saveReading(Reading reading) {
+        // Set the reading time on server instead of raspberry pi.
         reading.setReadingTime(System.currentTimeMillis());
         readingDAO.saveReading(reading);
     }
