@@ -3,31 +3,40 @@ import network
 import urequests
 import ujson
 
-from machine import Pin
 import dht
+from machine import Pin
+
 from time import sleep
 
 from config import WIFI_SSID, WIFI_PASSWORD, API_URL
 
 
-# Config wifi
+# Config Wi-Fi
 SSID = WIFI_SSID
 PASSWORD = WIFI_PASSWORD
 
+# Config API
 URL = API_URL
 
-# Sensor etc
+# Config Sensor and LED (Onboard)
 sensor = dht.DHT11(Pin(2))
 led = Pin("LED", Pin.OUT)
 
-def blinkleds(amount):
+# This is used as a debugging tool.
+# To see if the device is running on a local power source you can use this function to make the LED on the pico blink
+# These are the settings in this code:
+# 5 blinks : Wi-Fi connected
+# 2 blinks : Exception
+# 1 blink : Successful POST
+
+def blink_leds(amount):
     for i in range(amount):
         led.on()
         sleep(0.5)
         led.off()
         sleep(0.5)
 
-# Connect to wifi
+# Connect to Wi-Fi
 def connect():
     wlan = network.WLAN(network.STA_IF)
     wlan.active(True)
@@ -39,7 +48,7 @@ def connect():
         while not wlan.isconnected():
             sleep(1)
 
-    blinkleds(5)
+    blink_leds(5)
     print("Connected to network!")
     print("IP:", wlan.ifconfig()[0])
 
@@ -64,10 +73,10 @@ def send_data(temperature, humidity):
         )
         if response.status_code == 201:
             print("HTTP:", response.status_code)
-            blinkleds(1)
+            blink_leds(1)
 
     except Exception as e:
-        blinkleds(2)
+        blink_leds(2)
         print("POST failed:", e)
 
     finally:
