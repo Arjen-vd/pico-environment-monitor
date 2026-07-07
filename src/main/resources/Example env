@@ -1,0 +1,3 @@
+Rename to .env and change databasename, postgresusername, postgrespassword to your own credentials.
+
+DB_CONNECTION=jdbc:postgresql://localhost:5432/databasename?user=postgresusername&password=postgrespassword
