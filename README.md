@@ -1,5 +1,3 @@
-## Raspberry Pi Pico W IoT project that measures environmental data and sends sensor readings to a Java webserver.
-
 ## Tech Stack
 
 ### Backend
