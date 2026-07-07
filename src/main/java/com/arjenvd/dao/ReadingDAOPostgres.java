@@ -4,7 +4,10 @@ import com.arjenvd.model.Reading;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReadingDAOPostgres implements ReadingDAO {
 
@@ -25,7 +28,30 @@ public class ReadingDAOPostgres implements ReadingDAO {
 
             return statement.executeUpdate() > 1;
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to save reading");
+            throw new RuntimeException("Failed to save reading " + e);
         }
+    }
+
+    @Override
+    public List<Reading> findAllReadings() {
+        String SQL = "SELECT * FROM readings";
+        List<Reading> readings = new ArrayList<>();
+
+        try (PreparedStatement statement = connection.prepareStatement(SQL)) {
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                readings.add(new Reading(
+                        resultSet.getInt("id"),
+                        resultSet.getLong("reading_time"),
+                        resultSet.getInt("temperature"),
+                        resultSet.getInt("humidity")
+                ));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to find readings " + e);
+        }
+        return readings;
     }
 }

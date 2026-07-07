@@ -5,6 +5,8 @@ import com.arjenvd.dao.ReadingDAOPostgres;
 import com.arjenvd.database.DbConnect;
 import com.arjenvd.model.Reading;
 
+import java.util.List;
+
 public class ReadingService {
 
     private final ReadingDAO readingDAO;
@@ -18,4 +20,11 @@ public class ReadingService {
         reading.setReadingTime(System.currentTimeMillis());
         readingDAO.saveReading(reading);
     }
+
+    public List findAllReadings() {
+        return readingDAO.findAllReadings();
+    }
+
 }
+
+
