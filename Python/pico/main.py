@@ -9,6 +9,7 @@ from time import sleep
 
 from config import WIFI_SSID, WIFI_PASSWORD, API_URL
 
+
 # Config wifi
 SSID = WIFI_SSID
 PASSWORD = WIFI_PASSWORD
