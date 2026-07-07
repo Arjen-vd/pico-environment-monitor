@@ -1,45 +1,94 @@
+################################
+# Maven / Java
+################################
+
 target/
+
+# Keep Maven wrapper
 !.mvn/wrapper/maven-wrapper.jar
+
+# Allow target folders inside source folders if needed
 !**/src/main/**/target/
 !**/src/test/**/target/
-.kotlin
+
+
+################################
+# Environment / Secrets
+################################
+
 .env
 
-### Python secrets
+# MicroPython / Pico secrets
 pico/config.py
 
-### IntelliJ IDEA ###
-.idea
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-.idea/material_theme_project_new.xml
+
+################################
+# Python
+################################
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+
+################################
+# Kotlin
+################################
+
+.kotlin/
+
+
+################################
+# IntelliJ IDEA
+################################
+
+.idea/
 *.iws
 *.iml
 *.ipr
 
-### Eclipse ###
-.apt_generated
+
+################################
+# Eclipse
+################################
+
+.apt_generated/
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-### NetBeans ###
+
+################################
+# NetBeans
+################################
+
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+
 build/
+
+# Allow build folders inside source folders if needed
 !**/src/main/**/build/
 !**/src/test/**/build/
 
-### VS Code ###
+
+################################
+# VS Code
+################################
+
 .vscode/
 
-### Mac OS ###
+
+################################
+# OS files
+################################
+
 .DS_Store
+Thumbs.db
