@@ -1,6 +1,3 @@
-# This code runs on the Raspberry Pi Pico 2 W
-# Please insert your own wifi and API config
-
 # Imports
 import network
 import urequests
@@ -10,12 +7,13 @@ from machine import Pin
 import dht
 from time import sleep
 
+from config import WIFI_SSID, WIFI_PASSWORD, API_URL
 
 # Config wifi
-SSID = "ENTER WIFI SSID"
-PASSWORD = "ENTER WIFI PASSWORD"
+SSID = WIFI_SSID
+PASSWORD = WIFI_PASSWORD
 
-URL = "http://IPADRESWEBSERVER:8080/api/readings"
+URL = API_URL
 
 # Sensor etc
 sensor = dht.DHT11(Pin(2))
@@ -34,14 +32,14 @@ def connect():
     wlan.active(True)
 
     if not wlan.isconnected():
-        print("Verbinden met wifi...")
+        print("Connecting to wifi...")
         wlan.connect(SSID, PASSWORD)
 
         while not wlan.isconnected():
             sleep(1)
 
     blinkleds(5)
-    print("Verbonden met netwerk!")
+    print("Connected to network!")
     print("IP:", wlan.ifconfig()[0])
 
 
@@ -69,7 +67,7 @@ def send_data(temperature, humidity):
 
     except Exception as e:
         blinkleds(2)
-        print("POST mislukt:", e)
+        print("POST failed:", e)
 
     finally:
         if response is not None:
@@ -87,12 +85,12 @@ while True:
         humidity = sensor.humidity()
 
         print("------------------------")
-        print("Temperatuur :", temperature, "°C")
-        print("Luchtvochtigheid :", humidity, "%")
+        print("Temperature :", temperature, "°C")
+        print("Humidity :", humidity, "%")
 
         send_data(temperature, humidity)
 
     except Exception as e:
-        print("Fout:", e)
+        print("Error:", e)
 
-    sleep(10)
+    sleep(60)
